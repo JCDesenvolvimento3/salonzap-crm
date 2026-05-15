@@ -1,0 +1,28 @@
+{
+  "name": "salonzap-crm",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev -w @salonzap/web",
+    "dev:api": "npm run start:dev -w @salonzap/api",
+    "dev:extension": "npm run dev -w @salonzap/extension",
+    "dev": "concurrently -k -n API,WEB \"npm run dev:api\" \"npm run dev:web\"",
+    "build:sdk": "npm run build -w @salonzap/sdk",
+    "build:api": "npm run build -w @salonzap/api",
+    "build:web": "npm run build -w @salonzap/web",
+    "build:extension": "npm run build -w @salonzap/extension",
+    "build": "npm run build:sdk && npm run build:api && npm run build:web && npm run build:extension",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:generate": "npm run prisma:generate -w @salonzap/api",
+    "db:migrate": "npm run prisma:migrate -w @salonzap/api",
+    "db:seed": "npm run db:seed -w @salonzap/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "vite": "^7.3.3"
+  }
+}

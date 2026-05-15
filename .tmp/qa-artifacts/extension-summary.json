@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-05-15T04:48:54.291Z",
+  "popup": [
+    {
+      "state": "login",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "extension",
+        "bodyTextLength": 475,
+        "horizontalPageOverflow": 0
+      },
+      "bodyText": "SALONZAP CRM\n\nExtensao conectada ao WhatsApp Web\n\nA mesma linguagem visual premium agora acompanha o time tambem dentro do navegador.\n\nStatus: aguardando login na sidebar\n\nAPI: http://localhost:3333\n\nRespostas rapidas\n\nUse atalhos compartilhados com o painel web.\n\nFunil sincronizado\n\nMova contatos entre stages sem sair do WhatsApp Web.\n\n1. Abra `web.whatsapp.com`.\n2. Entre na sidebar com `admin@salonzap.local`.\n3. Clique em uma resposta rapida ou mova o contato no funil."
+    },
+    {
+      "state": "authenticated",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "extension",
+        "bodyTextLength": 459,
+        "horizontalPageOverflow": 0
+      },
+      "bodyText": "SALONZAP CRM\n\nExtensao conectada ao WhatsApp Web\n\nA mesma linguagem visual premium agora acompanha o time tambem dentro do navegador.\n\nStatus: autenticada\n\nAPI: http://localhost:3333\n\nRespostas rapidas\n\nUse atalhos compartilhados com o painel web.\n\nFunil sincronizado\n\nMova contatos entre stages sem sair do WhatsApp Web.\n\n1. Abra `web.whatsapp.com`.\n2. Entre na sidebar com `admin@salonzap.local`.\n3. Clique em uma resposta rapida ou mova o contato no funil."
+    }
+  ],
+  "sidebar": [
+    {
+      "state": "error",
+      "consoleMessages": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+        }
+      ],
+      "metrics": {
+        "title": "SalonZap Extension Harness",
+        "bodyTextLength": 482,
+        "horizontalPageOverflow": 0
+      },
+      "feedback": "Failed to fetch"
+    },
+    {
+      "state": "authenticated",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap Extension Harness",
+        "bodyTextLength": 1167,
+        "horizontalPageOverflow": 0
+      },
+      "bodyText": "SalonZap CRM\n\nWhatsApp sidebar\n\nFast salon context, now with a cleaner premium shell.\n\nLive session\n\nSalonZap Studio\n\nadmin@salonzap.local\n\nLive\nStages5\nReplies3\nTags4\n\nChat aberto\n\nContato detectado no WhatsApp\nAtivo\nFernanda Lima\n\n+55 31 95555-0022 • Cliente VIP aguardando retorno sobre pacote premium\n\nPerfil CRM\n\nFernanda Lima\n\n+55 31 95555-0022\n\nNovo lead\nStage\nNovo lead\nEm conversa\nAgendamento\nConfirmado\nCliente\nNota rapidaSalvar nota\n\nTags\n\nColoraçãoCorte + BarbaReagendarVIP\n\nRespostas rapidas\n\nConfirmação\n\n/confirma • Seu horário está confirmado. Se precisar remarcar, me chama por aqui com antecedência....\n\nBoas-vindas\n\n/oi • Oi! Aqui é da equipe SalonZap Studio. Me conta rapidinho qual serviço você quer fazer ...\n\nReativação\n\n/reativar • Passando para te avisar que abrimos alguns horários premium nesta semana. Quer que eu ...\n\nNotas recentes\n\nSem notas ainda para este contato.\n\nSessao\n\nadmin@salonzap.local\n\nSair da extensao\nExtensao conectada com sucesso."
+    }
+  ]
+}

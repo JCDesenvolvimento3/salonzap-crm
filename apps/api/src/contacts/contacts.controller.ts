@@ -1,0 +1,65 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import type { RequestUser } from '../common/interfaces/request-user.interface';
+import { CreateContactDto } from './dto/create-contact.dto';
+import { SyncWhatsappContactDto } from './dto/sync-whatsapp-contact.dto';
+import { UpdateContactDto } from './dto/update-contact.dto';
+import { ContactsService } from './contacts.service';
+
+@Controller('contacts')
+@UseGuards(JwtAuthGuard)
+export class ContactsController {
+  constructor(private readonly contactsService: ContactsService) {}
+
+  @Get()
+  list(
+    @CurrentUser() user: RequestUser,
+    @Query('query') query?: string,
+    @Query('stageId') stageId?: string,
+  ) {
+    return this.contactsService.list(user.salonId, query, stageId);
+  }
+
+  @Get(':id')
+  detail(@CurrentUser() user: RequestUser, @Param('id') contactId: string) {
+    return this.contactsService.detail(user.salonId, contactId);
+  }
+
+  @Post()
+  create(@CurrentUser() user: RequestUser, @Body() body: CreateContactDto) {
+    return this.contactsService.create(user.salonId, body);
+  }
+
+  @Post('sync-from-whatsapp')
+  syncFromWhatsapp(
+    @CurrentUser() user: RequestUser,
+    @Body() body: SyncWhatsappContactDto,
+  ) {
+    return this.contactsService.syncFromWhatsapp(user.salonId, body);
+  }
+
+  @Patch(':id')
+  update(
+    @CurrentUser() user: RequestUser,
+    @Param('id') contactId: string,
+    @Body() body: UpdateContactDto,
+  ) {
+    return this.contactsService.update(user.salonId, contactId, body);
+  }
+
+  @Delete(':id')
+  remove(@CurrentUser() user: RequestUser, @Param('id') contactId: string) {
+    return this.contactsService.remove(user.salonId, contactId);
+  }
+}

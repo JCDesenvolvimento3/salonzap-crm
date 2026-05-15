@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ReminderStatus {
+  PENDING
+  DONE
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+}
+
+enum AiLogType {
+  SUGGEST_REPLY
+  SUMMARIZE_CONVERSATION
+  GENERATE_CAMPAIGN
+  IDENTIFY_INTENT
+}
+
+model Salon {
+  id             String       @id @default(cuid())
+  name           String
+  slug           String       @unique
+  timezone       String       @default("America/Sao_Paulo")
+  welcomeMessage String?
+  brandColor     String       @default("#F97316")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  users          User[]
+  contacts       Contact[]
+  tags           Tag[]
+  notes          Note[]
+  quickReplies   QuickReply[]
+  reminders      Reminder[]
+  stages         Stage[]
+  campaigns      Campaign[]
+  aiLogs         AiLog[]
+}
+
+model User {
+  id           String       @id @default(cuid())
+  salonId      String
+  name         String
+  email        String       @unique
+  passwordHash String
+  role         String       @default("owner")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  salon        Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  notes        Note[]       @relation("AuthorNotes")
+  reminders    Reminder[]   @relation("OwnerReminders")
+  quickReplies QuickReply[] @relation("AuthorQuickReplies")
+  aiLogs       AiLog[]
+}
+
+model Stage {
+  id             String    @id @default(cuid())
+  salonId        String
+  name           String
+  slug           String
+  color          String
+  order          Int
+  winProbability Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  salon          Salon     @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  contacts       Contact[]
+
+  @@unique([salonId, slug])
+  @@unique([salonId, order])
+}
+
+model Contact {
+  id                String       @id @default(cuid())
+  salonId           String
+  stageId           String
+  name              String
+  phone             String?
+  email             String?
+  city              String?
+  source            String       @default("WhatsApp Web")
+  statusText        String?
+  avatarUrl         String?
+  whatsappName      String?
+  lastInteractionAt DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  salon             Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  stage             Stage        @relation(fields: [stageId], references: [id], onDelete: Restrict)
+  tags              ContactTag[]
+  notes             Note[]
+  reminders         Reminder[]
+  aiLogs            AiLog[]
+}
+
+model Tag {
+  id        String       @id @default(cuid())
+  salonId   String
+  name      String
+  color     String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  salon     Salon        @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  contacts  ContactTag[]
+
+  @@unique([salonId, name])
+}
+
+model ContactTag {
+  contactId  String
+  tagId      String
+  assignedAt DateTime @default(now())
+  contact    Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([contactId, tagId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  salonId   String
+  contactId String
+  authorId  String
+  body      String
+  pinned    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  salon     Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  author    User     @relation("AuthorNotes", fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model QuickReply {
+  id        String   @id @default(cuid())
+  salonId   String
+  authorId  String
+  title     String
+  shortcut  String
+  body      String
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  salon     Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  author    User     @relation("AuthorQuickReplies", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@unique([salonId, shortcut])
+}
+
+model Reminder {
+  id          String         @id @default(cuid())
+  salonId     String
+  contactId   String?
+  ownerId     String
+  title       String
+  description String?
+  dueAt       DateTime
+  status      ReminderStatus @default(PENDING)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  salon       Salon          @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  contact     Contact?       @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  owner       User           @relation("OwnerReminders", fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model Campaign {
+  id           String         @id @default(cuid())
+  salonId      String
+  title        String
+  message      String
+  audience     String
+  scheduledFor DateTime?
+  status       CampaignStatus @default(DRAFT)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  salon        Salon          @relation(fields: [salonId], references: [id], onDelete: Cascade)
+}
+
+model AiLog {
+  id           String    @id @default(cuid())
+  salonId      String
+  userId       String
+  contactId    String?
+  type         AiLogType
+  provider     String    @default("openrouter")
+  model        String
+  request      Json
+  response     Json
+  success      Boolean   @default(false)
+  fallbackUsed Boolean   @default(false)
+  errorMessage String?
+  createdAt    DateTime  @default(now())
+  salon        Salon     @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contact      Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+
+  @@index([salonId, type, createdAt])
+  @@index([userId, createdAt])
+  @@index([contactId, createdAt])
+}

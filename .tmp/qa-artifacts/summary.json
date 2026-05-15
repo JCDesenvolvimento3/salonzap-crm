@@ -1,0 +1,1245 @@
+{
+  "generatedAt": "2026-05-15T04:44:52.244Z",
+  "loginResult": {
+    "route": "login",
+    "viewport": "desktop",
+    "consoleMessages": [],
+    "metrics": {
+      "title": "SalonZap CRM",
+      "bodyTextLength": 759,
+      "nextOverlay": false,
+      "horizontalPageOverflow": 0,
+      "overflowElements": []
+    }
+  },
+  "webResults": [
+    {
+      "route": "dashboard",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 2292,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": []
+      }
+    },
+    {
+      "route": "contacts",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 2224,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": []
+      }
+    },
+    {
+      "route": "kanban",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1690,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "div",
+            "label": "Novo lead\n\n1 contatos no stage\n\n10% WIN\nFL\n\nFernanda Lima\n\n+55 31 95555-0022\n\nPr",
+            "horizontalOverflow": 608,
+            "right": 1408,
+            "left": 352,
+            "width": 1056
+          },
+          {
+            "tag": "div",
+            "label": "Novo lead\n\n1 contatos no stage\n\n10% WIN\nFL\n\nFernanda Lima\n\n+55 31 95555-0022\n\nPr",
+            "horizontalOverflow": 0,
+            "right": 2016,
+            "left": 352,
+            "width": 1664
+          },
+          {
+            "tag": "div",
+            "label": "Confirmado\n\n1 contatos no stage\n\n80% WIN\nBS\n\nBianca Souza\n\n+55 11 97777-4411\n\nQu",
+            "horizontalOverflow": 0,
+            "right": 1680,
+            "left": 1360,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "Confirmado\n\n1 contatos no stage\n\n80% WIN",
+            "horizontalOverflow": 0,
+            "right": 1663,
+            "left": 1377,
+            "width": 286
+          },
+          {
+            "tag": "div",
+            "label": "Confirmado\n\n1 contatos no stage\n\n80% WIN",
+            "horizontalOverflow": 0,
+            "right": 1646,
+            "left": 1394,
+            "width": 252
+          },
+          {
+            "tag": "div",
+            "label": "Confirmado\n\n1 contatos no stage",
+            "horizontalOverflow": 0,
+            "right": 1522.375,
+            "left": 1394,
+            "width": 128.375
+          },
+          {
+            "tag": "div",
+            "label": "Confirmado",
+            "horizontalOverflow": 0,
+            "right": 1522.375,
+            "left": 1394,
+            "width": 128.375
+          },
+          {
+            "tag": "h2",
+            "label": "Confirmado",
+            "horizontalOverflow": 0,
+            "right": 1522.375,
+            "left": 1418,
+            "width": 104.375
+          }
+        ]
+      }
+    },
+    {
+      "route": "campaigns",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1808,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": []
+      }
+    },
+    {
+      "route": "quick-replies",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1619,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": []
+      }
+    },
+    {
+      "route": "reminders",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1670,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": []
+      }
+    },
+    {
+      "route": "settings",
+      "viewport": "desktop",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1700,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": []
+      }
+    },
+    {
+      "route": "dashboard",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 2292,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "contacts",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 2224,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "kanban",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1690,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "campaigns",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1808,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "quick-replies",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1619,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "reminders",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1670,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "settings",
+      "viewport": "tablet",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1700,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "dashboard",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 2205,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "contacts",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1825,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "kanban",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1602,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "campaigns",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1539,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "quick-replies",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1529,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "reminders",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1548,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    },
+    {
+      "route": "settings",
+      "viewport": "mobile",
+      "consoleMessages": [],
+      "metrics": {
+        "title": "SalonZap CRM",
+        "bodyTextLength": 1611,
+        "nextOverlay": false,
+        "horizontalPageOverflow": 0,
+        "overflowElements": [
+          {
+            "tag": "aside",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -12.79998779296875,
+            "left": -332.79998779296875,
+            "width": 320
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio\nWHATSAPP-FIRST SAAS\n\nFluxo premium para relacionam",
+            "horizontalOverflow": 0,
+            "right": -24.79998779296875,
+            "left": -320.79998779296875,
+            "width": 296
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -41.79998779296875,
+            "left": -303.79998779296875,
+            "width": 262
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -303.79998779296875,
+            "width": 206.71875
+          },
+          {
+            "tag": "div",
+            "label": "flex h-14 w-14 items-center justify-center rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,var(--accent),var(--accent-strong),var(--accent-warm))] text-slate-950 shadow-[var(--shadow-glow)]",
+            "horizontalOverflow": 0,
+            "right": -248.78436279296875,
+            "left": -303.79998779296875,
+            "width": 55.015625
+          },
+          {
+            "tag": "div",
+            "label": "SALONZAP CRM\n\nSalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "p",
+            "label": "SALONZAP CRM",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          },
+          {
+            "tag": "h2",
+            "label": "SalonZap Studio",
+            "horizontalOverflow": 0,
+            "right": -97.08123779296875,
+            "left": -236.78436279296875,
+            "width": 139.703125
+          }
+        ]
+      }
+    }
+  ],
+  "extensionResults": []
+}
