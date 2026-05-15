@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -9,7 +10,7 @@ import { UpdateQuickReplyDto } from './dto/update-quick-reply.dto';
 
 @Injectable()
 export class QuickRepliesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   async list(salonId: string) {
     return this.prisma.quickReply.findMany({

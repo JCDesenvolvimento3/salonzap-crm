@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import type { RequestUser } from '../common/interfaces/request-user.interface';
@@ -8,7 +15,10 @@ import { KanbanService } from './kanban.service';
 @Controller('kanban')
 @UseGuards(JwtAuthGuard)
 export class KanbanController {
-  constructor(private readonly kanbanService: KanbanService) {}
+  constructor(
+    @Inject(KanbanService)
+    private readonly kanbanService: KanbanService,
+  ) {}
 
   @Get('board')
   board(@CurrentUser() user: RequestUser) {

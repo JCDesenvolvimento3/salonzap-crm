@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -20,7 +21,10 @@ import { ContactsService } from './contacts.service';
 @Controller('contacts')
 @UseGuards(JwtAuthGuard)
 export class ContactsController {
-  constructor(private readonly contactsService: ContactsService) {}
+  constructor(
+    @Inject(ContactsService)
+    private readonly contactsService: ContactsService,
+  ) {}
 
   @Get()
   list(

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -18,7 +19,10 @@ import { CampaignsService } from './campaigns.service';
 @Controller('campaigns')
 @UseGuards(JwtAuthGuard)
 export class CampaignsController {
-  constructor(private readonly campaignsService: CampaignsService) {}
+  constructor(
+    @Inject(CampaignsService)
+    private readonly campaignsService: CampaignsService,
+  ) {}
 
   @Get()
   list(@CurrentUser() user: RequestUser) {

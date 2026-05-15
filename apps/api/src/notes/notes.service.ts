@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { noteInclude, serializeNote } from '../common/prisma/serializers';
 import { CreateNoteDto } from './dto/create-note.dto';
@@ -6,7 +6,7 @@ import { UpdateNoteDto } from './dto/update-note.dto';
 
 @Injectable()
 export class NotesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   async list(salonId: string, contactId?: string) {
     const notes = await this.prisma.note.findMany({

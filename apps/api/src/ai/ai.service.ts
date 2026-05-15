@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { AiLogType, Prisma } from '@prisma/client';
 import { contactDetailInclude } from '../common/prisma/serializers';
 import type { RequestUser } from '../common/interfaces/request-user.interface';
@@ -44,7 +44,8 @@ export class AiService {
   private readonly logger = new Logger(AiService.name);
 
   constructor(
-    private readonly prisma: PrismaService,
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(OpenRouterService)
     private readonly openRouterService: OpenRouterService,
   ) {}
 

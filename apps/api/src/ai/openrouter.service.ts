@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 type OpenRouterMessage = {
@@ -29,7 +29,9 @@ type OpenRouterResponse = {
 export class OpenRouterService {
   private readonly endpoint = 'https://openrouter.ai/api/v1/chat/completions';
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    @Inject(ConfigService) private readonly configService: ConfigService,
+  ) {}
 
   getDefaultModel() {
     return (

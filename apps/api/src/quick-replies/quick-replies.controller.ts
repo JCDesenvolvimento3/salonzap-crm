@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -18,7 +19,10 @@ import { QuickRepliesService } from './quick-replies.service';
 @Controller('quick-replies')
 @UseGuards(JwtAuthGuard)
 export class QuickRepliesController {
-  constructor(private readonly quickRepliesService: QuickRepliesService) {}
+  constructor(
+    @Inject(QuickRepliesService)
+    private readonly quickRepliesService: QuickRepliesService,
+  ) {}
 
   @Get()
   list(@CurrentUser() user: RequestUser) {

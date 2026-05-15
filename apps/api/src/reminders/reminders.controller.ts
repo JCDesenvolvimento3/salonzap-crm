@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -19,7 +20,10 @@ import { RemindersService } from './reminders.service';
 @Controller('reminders')
 @UseGuards(JwtAuthGuard)
 export class RemindersController {
-  constructor(private readonly remindersService: RemindersService) {}
+  constructor(
+    @Inject(RemindersService)
+    private readonly remindersService: RemindersService,
+  ) {}
 
   @Get()
   list(

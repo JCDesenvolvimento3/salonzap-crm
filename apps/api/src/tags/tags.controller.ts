@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -18,7 +19,7 @@ import { TagsService } from './tags.service';
 @Controller('tags')
 @UseGuards(JwtAuthGuard)
 export class TagsController {
-  constructor(private readonly tagsService: TagsService) {}
+  constructor(@Inject(TagsService) private readonly tagsService: TagsService) {}
 
   @Get()
   list(@CurrentUser() user: RequestUser) {

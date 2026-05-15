@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
@@ -19,7 +20,9 @@ import { NotesService } from './notes.service';
 @Controller('notes')
 @UseGuards(JwtAuthGuard)
 export class NotesController {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(
+    @Inject(NotesService) private readonly notesService: NotesService,
+  ) {}
 
   @Get()
   list(
