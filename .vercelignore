@@ -10,5 +10,4 @@ apps/api/node_modules
 apps/api/dist
 apps/api/.env.local
 apps/api/.vercel
-apps/web
 apps/extension

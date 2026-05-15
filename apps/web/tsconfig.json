@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@salonzap/sdk": ["./src/lib/sdk"]
     }
   },
   "include": [
