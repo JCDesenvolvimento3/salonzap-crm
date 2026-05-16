@@ -14,7 +14,7 @@ import { LeadCaptureForm } from '@/components/marketing/lead-capture-form'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { SALES_EMAIL, SUPPORT_EMAIL } from '@/lib/env'
+import { EXTENSION_DOWNLOAD_PATH, SALES_EMAIL, SUPPORT_EMAIL, WHATSAPP_WEB_URL } from '@/lib/env'
 
 const benefits = [
   {
@@ -105,6 +105,16 @@ export default function Home() {
                 </Button>
                 <Button asChild variant="surface" size="lg">
                   <Link href="/login">Entrar no workspace</Link>
+                </Button>
+                <Button asChild variant="surface" size="lg">
+                  <a href={EXTENSION_DOWNLOAD_PATH} download>
+                    Baixar extensao
+                  </a>
+                </Button>
+                <Button asChild variant="surface" size="lg">
+                  <a href={WHATSAPP_WEB_URL} target="_blank" rel="noreferrer">
+                    Abrir WhatsApp Web
+                  </a>
                 </Button>
                 <Button asChild variant="surface" size="lg">
                   <a href={`mailto:${SALES_EMAIL}`}>Solicitar piloto</a>

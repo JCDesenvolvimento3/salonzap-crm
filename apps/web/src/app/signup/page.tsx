@@ -61,12 +61,13 @@ export default function SignupPage() {
   const [submitting, setSubmitting] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [redirectAfterAuth, setRedirectAfterAuth] = useState('/dashboard')
 
   useEffect(() => {
     if (!loading && session) {
-      router.replace('/dashboard')
+      router.replace(redirectAfterAuth)
     }
-  }, [loading, router, session])
+  }, [loading, redirectAfterAuth, router, session])
 
   const normalizeErrorMessage = (value: unknown) => {
     const message = value instanceof Error ? value.message : 'Nao foi possivel criar a conta.'
@@ -78,8 +79,8 @@ export default function SignupPage() {
     return message
   }
 
-  const goToDashboard = () => {
-    window.location.assign('/dashboard')
+  const goToNextStep = (path: string) => {
+    window.location.assign(path)
   }
 
   const passwordMismatch = useMemo(() => {
@@ -100,6 +101,7 @@ export default function SignupPage() {
 
     setSubmitting(true)
     setError(null)
+    setRedirectAfterAuth('/onboarding')
 
     try {
       await register({
@@ -114,8 +116,9 @@ export default function SignupPage() {
         description: 'Sua conta owner foi provisionada e o acesso ja esta ativo.',
         tone: 'success',
       })
-      goToDashboard()
+      goToNextStep('/onboarding')
     } catch (submitError) {
+      setRedirectAfterAuth('/dashboard')
       const message = normalizeErrorMessage(submitError)
       setError(message)
       pushToast({
@@ -140,6 +143,7 @@ export default function SignupPage() {
 
     setGoogleLoading(true)
     setError(null)
+    setRedirectAfterAuth('/onboarding')
 
     try {
       const redirectUri = `${window.location.origin}/signup`
@@ -156,8 +160,9 @@ export default function SignupPage() {
         },
         true,
       )
-      goToDashboard()
+      goToNextStep('/onboarding')
     } catch (submitError) {
+      setRedirectAfterAuth('/dashboard')
       const message = normalizeErrorMessage(submitError)
       setError(message)
       pushToast({

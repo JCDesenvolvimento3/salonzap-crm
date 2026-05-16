@@ -12,6 +12,7 @@ import {
   Users,
 } from 'lucide-react'
 import { useAuth } from '@/components/providers/auth-provider'
+import { ExtensionInstallModal } from '@/components/extension-install-modal'
 import { useToast } from '@/components/providers/toast-provider'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -70,6 +71,8 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      <ExtensionInstallModal />
+
       <PageHeader
         eyebrow="Visao geral"
         title="Central de atendimento e recuperacao de clientes"

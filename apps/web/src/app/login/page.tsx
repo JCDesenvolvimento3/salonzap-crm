@@ -24,7 +24,13 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { LOGOUT_REASON_STORAGE_KEY, GOOGLE_CLIENT_ID, SUPPORT_EMAIL } from '@/lib/env'
+import {
+  EXTENSION_DOWNLOAD_PATH,
+  GOOGLE_CLIENT_ID,
+  LOGOUT_REASON_STORAGE_KEY,
+  SUPPORT_EMAIL,
+  WHATSAPP_WEB_URL,
+} from '@/lib/env'
 import { requestGoogleAuthCode } from '@/lib/google-auth'
 
 const highlights = [
@@ -98,6 +104,16 @@ export default function LoginPage() {
 
   const goToDashboard = () => {
     window.location.assign('/dashboard')
+  }
+
+  const startExtensionSetup = () => {
+    const link = document.createElement('a')
+    link.href = EXTENSION_DOWNLOAD_PATH
+    link.download = 'salonzap-extension.zip'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.open(WHATSAPP_WEB_URL, '_blank', 'noopener,noreferrer')
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -364,6 +380,19 @@ export default function LoginPage() {
                     <div className="mt-5 flex flex-wrap gap-3">
                       <Button asChild variant="secondary" size="sm">
                         <Link href="/signup">Criar conta</Link>
+                      </Button>
+                      <Button variant="surface" size="sm" onClick={startExtensionSetup}>
+                        Instalar e abrir WhatsApp
+                      </Button>
+                      <Button asChild variant="surface" size="sm">
+                        <a href={EXTENSION_DOWNLOAD_PATH} download>
+                          Baixar extensao
+                        </a>
+                      </Button>
+                      <Button asChild variant="surface" size="sm">
+                        <a href={WHATSAPP_WEB_URL} target="_blank" rel="noreferrer">
+                          Abrir WhatsApp Web
+                        </a>
                       </Button>
                     </div>
                   </div>

@@ -5,3 +5,5 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://salonzap-cr
 export const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'jsstorebrazil@gmail.com'
 export const SALES_EMAIL = process.env.NEXT_PUBLIC_SALES_EMAIL ?? SUPPORT_EMAIL
 export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''
+export const WHATSAPP_WEB_URL = 'https://web.whatsapp.com'
+export const EXTENSION_DOWNLOAD_PATH = '/downloads/salonzap-extension.zip'
