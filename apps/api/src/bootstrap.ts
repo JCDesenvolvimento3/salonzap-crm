@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import type { INestApplication } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { AppModule } from './app.module';
+import { RequestMetricsInterceptor } from './common/interceptors/request-metrics.interceptor';
 import { PrismaService } from './prisma/prisma.service';
 
 let appPromise: Promise<INestApplication> | null = null;
@@ -28,6 +29,7 @@ async function createApp() {
         },
       }),
     );
+    app.useGlobalInterceptors(new RequestMetricsInterceptor());
 
     const prismaService = app.get(PrismaService);
     prismaService.enableShutdownHooks(app);

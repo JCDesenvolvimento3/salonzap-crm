@@ -16,6 +16,7 @@ import { QuickRepliesModule } from './quick-replies/quick-replies.module';
 import { RemindersModule } from './reminders/reminders.module';
 import { SettingsModule } from './settings/settings.module';
 import { TagsModule } from './tags/tags.module';
+import { CommonModule } from './common/common.module';
 
 const envFileCandidates = [
   join(process.cwd(), '.env'),
@@ -32,6 +33,7 @@ const envFileCandidates = [
       isGlobal: true,
       envFilePath: envFileCandidates.length ? envFileCandidates : undefined,
     }),
+    CommonModule,
     PrismaModule,
     AuthModule,
     DashboardModule,

@@ -27,6 +27,6 @@ export class UpdateCampaignDto {
   scheduledFor?: string | null;
 
   @IsOptional()
-  @IsIn(['DRAFT', 'SCHEDULED', 'SENT'])
-  status?: 'DRAFT' | 'SCHEDULED' | 'SENT';
+  @IsIn(['DRAFT', 'SCHEDULED', 'SENT', 'PAUSED'])
+  status?: 'DRAFT' | 'SCHEDULED' | 'SENT' | 'PAUSED';
 }

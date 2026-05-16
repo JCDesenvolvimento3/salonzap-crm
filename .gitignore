@@ -13,3 +13,6 @@ apps/extension/.vite
 
 .vercel
 .env*.local
+artifacts
+.tmp-*.log
+client_secret*.json

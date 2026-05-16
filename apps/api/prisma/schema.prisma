@@ -16,6 +16,7 @@ enum CampaignStatus {
   DRAFT
   SCHEDULED
   SENT
+  PAUSED
 }
 
 enum AiLogType {
@@ -43,6 +44,7 @@ model Salon {
   stages         Stage[]
   campaigns      Campaign[]
   aiLogs         AiLog[]
+  activityLogs   ActivityLog[]
 }
 
 model User {
@@ -59,6 +61,7 @@ model User {
   reminders    Reminder[]   @relation("OwnerReminders")
   quickReplies QuickReply[] @relation("AuthorQuickReplies")
   aiLogs       AiLog[]
+  activityLogs ActivityLog[]
 }
 
 model Stage {
@@ -204,4 +207,23 @@ model AiLog {
   @@index([salonId, type, createdAt])
   @@index([userId, createdAt])
   @@index([contactId, createdAt])
+}
+
+model ActivityLog {
+  id          String   @id @default(cuid())
+  salonId     String
+  userId      String?
+  entityType  String
+  entityId    String?
+  action      String
+  title       String
+  description String
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  salon       Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([salonId, createdAt])
+  @@index([salonId, entityType, entityId, createdAt])
+  @@index([userId, createdAt])
 }

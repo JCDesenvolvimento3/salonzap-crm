@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import {
   BellRing,
   Boxes,
+  ClipboardCheck,
   ClipboardList,
   LayoutDashboard,
   LogOut,
@@ -31,50 +32,57 @@ const navItems = [
     href: '/dashboard',
     label: 'Dashboard',
     icon: LayoutDashboard,
-    eyebrow: 'Executive view',
-    description: 'Monitor pipeline pressure, retention risk, and team momentum in one premium cockpit.',
+    eyebrow: 'Visao geral',
+    description: 'Acompanhe clientes, follow-ups, campanhas e atividade recente da operacao.',
+  },
+  {
+    href: '/onboarding',
+    label: 'Onboarding',
+    icon: ClipboardCheck,
+    eyebrow: 'Checklist inicial',
+    description: 'Feche identidade, contatos, respostas rapidas e extensao para colocar o salao em operacao.',
   },
   {
     href: '/contacts',
     label: 'Contatos',
     icon: Users,
-    eyebrow: 'CRM graph',
-    description: 'Open the contact graph, notes, tags, and reminders without leaving the main workspace.',
+    eyebrow: 'Base de clientes',
+    description: 'Consulte perfil, tags, notas, lembretes e historico do cliente no mesmo fluxo.',
   },
   {
     href: '/kanban',
     label: 'Kanban',
     icon: PanelsTopLeft,
-    eyebrow: 'Pipeline flow',
-    description: 'Drag leads across stages with real backend persistence and smooth board interactions.',
+    eyebrow: 'Funil comercial',
+    description: 'Mova clientes entre etapas com persistencia real e historico operacional.',
   },
   {
     href: '/campaigns',
     label: 'Campanhas',
     icon: Boxes,
-    eyebrow: 'Outbound engine',
-    description: 'Build reactivation flows, schedule sends, and keep communication tidy for the team.',
+    eyebrow: 'Campanhas',
+    description: 'Crie acoes de reativacao, agende envios e acompanhe o status comercial.',
   },
   {
     href: '/quick-replies',
     label: 'Respostas rapidas',
     icon: MessageSquareText,
-    eyebrow: 'Playbooks',
-    description: 'Standardize tone, recovery scripts, and fast replies shared with the extension sidebar.',
+    eyebrow: 'Respostas rapidas',
+    description: 'Padronize o tom do atendimento e compartilhe atalhos com a extensao do WhatsApp.',
   },
   {
     href: '/reminders',
     label: 'Lembretes',
     icon: BellRing,
-    eyebrow: 'Follow-up stack',
-    description: 'Keep high-value leads warm with deadlines, ownership, and visible commercial follow-up.',
+    eyebrow: 'Lembretes',
+    description: 'Organize follow-ups, vencimentos e proximos passos sem perder o ritmo da operacao.',
   },
   {
     href: '/settings',
     label: 'Configuracoes',
     icon: Settings2,
-    eyebrow: 'Operations setup',
-    description: 'Tune brand feel, taxonomy, and extension readiness without touching backend contracts.',
+    eyebrow: 'Configuracoes',
+    description: 'Atualize dados do salao, identidade da conta e base de tags com seguranca.',
   },
 ] as const
 
@@ -138,13 +146,13 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <Card variant="spotlight" className="p-4">
-            <Badge tone="accent">WhatsApp-first SaaS</Badge>
+            <Badge tone="accent">Operacao pelo WhatsApp</Badge>
             <p className="mt-4 text-lg font-semibold text-white">
-              {session.salon.welcomeMessage ?? 'Client recovery, follow-up, and conversion now share one elegant workspace.'}
+              {session.salon.welcomeMessage ?? 'Atendimento, follow-up e recuperacao de clientes no mesmo workspace.'}
             </p>
             <div className="mt-5 grid grid-cols-2 gap-3">
-              <MiniStatus label="Theme" value={theme === 'obsidian' ? 'Obsidian' : 'Graphite'} />
-              <MiniStatus label="Sync" value="Live" accent />
+              <MiniStatus label="Tema" value={theme === 'obsidian' ? 'Obsidian' : 'Graphite'} />
+              <MiniStatus label="Sync" value="Ativo" accent />
             </div>
           </Card>
 
@@ -195,7 +203,7 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
               <Button variant="surface" size="icon" onClick={toggleTheme} title="Alternar tema" aria-label="Alternar tema">
                 <MoonStar className="h-4 w-4" />
               </Button>
-              <Button variant="secondary" className="flex-1" onClick={logout}>
+              <Button variant="secondary" className="flex-1" onClick={() => logout()}>
                 <LogOut className="h-4 w-4" />
                 Sair
               </Button>
@@ -221,7 +229,7 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Badge tone="accent" className="hidden md:inline-flex">
                 <Sparkles className="h-3.5 w-3.5" />
-                Extension synced
+                Extensao conectada
               </Badge>
               <Button variant="surface" size="icon" onClick={toggleTheme} title="Alternar tema" aria-label="Alternar tema">
                 <MoonStar className="h-4 w-4" />

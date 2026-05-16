@@ -44,11 +44,16 @@ export class RemindersController {
     @Param('id') reminderId: string,
     @Body() body: UpdateReminderDto,
   ) {
-    return this.remindersService.update(user.salonId, reminderId, body);
+    return this.remindersService.update(
+      user.salonId,
+      user.id,
+      reminderId,
+      body,
+    );
   }
 
   @Delete(':id')
   remove(@CurrentUser() user: RequestUser, @Param('id') reminderId: string) {
-    return this.remindersService.remove(user.salonId, reminderId);
+    return this.remindersService.remove(user.salonId, user.id, reminderId);
   }
 }

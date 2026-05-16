@@ -143,20 +143,20 @@ export default function KanbanPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Pipeline flow"
-        title="A more fluid kanban for a salon team that lives on movement"
-        description="Scroll across stages, drag high-intent leads, and keep the sales board readable on desktop and mobile without changing the existing backend contracts."
+        eyebrow="Funil comercial"
+        title="Kanban da operacao comercial"
+        description="Acompanhe clientes por etapa, mova o atendimento no funil e registre cada mudanca no historico operacional."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <MetricCard label="Stages" value={loading ? '...' : boardMetrics.stages} helper="colunas ativas no pipeline" />
+        <MetricCard label="Etapas" value={loading ? '...' : boardMetrics.stages} helper="colunas ativas no funil" />
         <MetricCard label="Contatos" value={loading ? '...' : boardMetrics.contactsCount} helper="itens distribuidos no board" />
         <MetricCard
-          label="Win leader"
+          label="Maior chance"
           value={loading ? '...' : `${boardMetrics.strongestStage?.winProbability ?? 0}%`}
           helper={boardMetrics.strongestStage?.name ?? 'sem lideranca'}
         />
-        <MetricCard label="Drag state" value={draggedId ? 'Live' : 'Idle'} helper="persistencia otimista com rollback seguro" />
+        <MetricCard label="Movimentacao" value={draggedId ? 'Em andamento' : 'Parada'} helper="persistencia otimista com rollback seguro" />
       </div>
 
       {error ? (
@@ -203,7 +203,7 @@ export default function KanbanPage() {
                       <p className="mt-2 text-sm text-[var(--text-secondary)]">{stage.contacts.length} contatos no stage</p>
                     </div>
                     <Badge tone="accent" className="normal-case tracking-[0.08em]">
-                      {stage.winProbability}% win
+                      {stage.winProbability}% conversao
                     </Badge>
                   </div>
                 </div>
@@ -225,9 +225,9 @@ export default function KanbanPage() {
                   ) : (
                     <div className="flex flex-1 flex-col items-center justify-center rounded-[28px] border border-dashed border-[var(--border-subtle)] bg-white/[0.03] p-6 text-center">
                       <Sparkles className="h-5 w-5 text-[var(--accent)]" />
-                      <p className="mt-3 text-sm font-medium text-white">Drop zone pronta</p>
+                      <p className="mt-3 text-sm font-medium text-white">Etapa pronta para receber clientes</p>
                       <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
-                        Arraste um contato para este stage e o backend sera sincronizado automaticamente.
+                        Arraste um contato para esta etapa e o backend sera sincronizado automaticamente.
                       </p>
                     </div>
                   )}
@@ -239,7 +239,7 @@ export default function KanbanPage() {
       ) : (
         <EmptyState
           title="Kanban vazio"
-          description="Assim que houver stages e contatos, o funil arrastavel aparecera aqui."
+          description="Cadastre contatos e etapas para acompanhar a evolucao comercial do salao."
           icon={<PanelsTopLeft className="h-6 w-6" />}
         />
       )}

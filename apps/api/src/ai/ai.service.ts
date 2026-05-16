@@ -1,9 +1,11 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { AiLogType, Prisma } from '@prisma/client';
+import { ActivityLogService } from '../common/services/activity-log.service';
 import { contactDetailInclude } from '../common/prisma/serializers';
 import type { RequestUser } from '../common/interfaces/request-user.interface';
 import { PrismaService } from '../prisma/prisma.service';
 import { GenerateCampaignDto } from './dto/generate-campaign.dto';
+import { GenerateReactivationMessageDto } from './dto/generate-reactivation-message.dto';
 import { IdentifyIntentDto } from './dto/identify-intent.dto';
 import { SuggestReplyDto } from './dto/suggest-reply.dto';
 import { SummarizeConversationDto } from './dto/summarize-conversation.dto';
@@ -39,6 +41,12 @@ type CampaignResult = AiMeta & {
   message: string;
 };
 
+type ReactivationResult = AiMeta & {
+  headline: string;
+  message: string;
+  reason: string;
+};
+
 @Injectable()
 export class AiService {
   private readonly logger = new Logger(AiService.name);
@@ -47,6 +55,8 @@ export class AiService {
     @Inject(PrismaService) private readonly prisma: PrismaService,
     @Inject(OpenRouterService)
     private readonly openRouterService: OpenRouterService,
+    @Inject(ActivityLogService)
+    private readonly activityLogService: ActivityLogService,
   ) {}
 
   async suggestReply(
@@ -80,7 +90,7 @@ export class AiService {
         {
           role: 'system',
           content:
-            'Voce e um assistente comercial de um salao premium que responde clientes no WhatsApp em PT-BR. ' +
+            'Voce e um assistente comercial de um salao que responde clientes no WhatsApp em PT-BR. ' +
             'Seja cordial, objetivo, consultivo e humano. Nao invente precos, horarios ou politicas. ' +
             'Responda sempre em JSON valido com as chaves "reply" e "tone".',
         },
@@ -256,7 +266,7 @@ export class AiService {
         {
           role: 'system',
           content:
-            'Voce cria campanhas de WhatsApp para um salao premium em PT-BR. ' +
+            'Voce cria campanhas de WhatsApp para um salao em PT-BR. ' +
             'Retorne somente JSON valido com "title", "audience" e "message". ' +
             'Mantenha o texto persuasivo, curto e pronto para envio, sem promessas irreais.',
         },
@@ -297,6 +307,56 @@ export class AiService {
         };
       },
     });
+  }
+
+  async generateReactivationMessage(
+    user: RequestUser,
+    payload: GenerateReactivationMessageDto,
+  ): Promise<ReactivationResult> {
+    const [salon, contact] = await Promise.all([
+      this.getSalonContext(user.salonId),
+      this.getContactContext(user.salonId, payload.contactId),
+    ]);
+
+    if (!contact) {
+      throw new NotFoundException('Contato nao encontrado para reativacao.');
+    }
+
+    const daysInactive = payload.daysInactive ?? inferDaysInactive(contact);
+    const result = await this.suggestReply(user, {
+      contactId: contact.id,
+      customerName: contact.name,
+      conversation: [
+        `Salao: ${salon.name}`,
+        salon.welcomeMessage
+          ? `Tom institucional: ${salon.welcomeMessage}`
+          : null,
+        this.buildContactPromptBlock(contact),
+        `Cliente sem resposta ou novo agendamento ha aproximadamente ${daysInactive} dias.`,
+        contact.phone ? `Telefone do cliente: ${contact.phone}` : null,
+        'Contexto: o objetivo e retomar a conversa com tom humano, leve e comercialmente elegante no WhatsApp.',
+      ]
+        .filter(Boolean)
+        .join('\n\n'),
+      goal:
+        payload.objective?.trim() ||
+        'Gerar uma mensagem curta de reativacao para trazer o cliente de volta ao salao, sem parecer automatica',
+    });
+
+    return {
+      source: result.source,
+      fallbackUsed: result.fallbackUsed,
+      model: result.model,
+      logId: result.logId,
+      headline:
+        daysInactive >= 60
+          ? 'Reativacao com urgencia comercial'
+          : 'Reativacao de cliente',
+      message: result.reply,
+      reason: result.fallbackUsed
+        ? 'Mensagem montada pelo fallback seguro com base no tempo sem contato e no contexto do CRM.'
+        : `Mensagem gerada pela IA real com foco em reengajar o cliente apos ${daysInactive} dias sem retorno.`,
+    };
   }
 
   private async runTask<T extends AiMeta>({
@@ -352,6 +412,22 @@ export class AiService {
         fallbackUsed: false,
       });
 
+      await this.activityLogService.record({
+        salonId: user.salonId,
+        userId: user.id,
+        entityType: contactId ? 'contact' : 'ai',
+        entityId: contactId,
+        action: 'ai_success',
+        title: getAiActivityTitle(type, false),
+        description: getAiActivityDescription(type, false),
+        metadata: {
+          aiLogId: logId,
+          type,
+          model: completion.model,
+          fallbackUsed: false,
+        },
+      });
+
       return {
         ...parsed,
         source: 'openrouter',
@@ -377,6 +453,23 @@ export class AiService {
         success: false,
         fallbackUsed: true,
         errorMessage: message,
+      });
+
+      await this.activityLogService.record({
+        salonId: user.salonId,
+        userId: user.id,
+        entityType: contactId ? 'contact' : 'ai',
+        entityId: contactId,
+        action: 'ai_fallback',
+        title: getAiActivityTitle(type, true),
+        description: getAiActivityDescription(type, true),
+        metadata: {
+          aiLogId: logId,
+          type,
+          model: defaultModel,
+          fallbackUsed: true,
+          errorMessage: message,
+        },
       });
 
       return {
@@ -616,6 +709,52 @@ export class AiService {
         'Se fizer sentido para voce, me responde aqui que eu te passo os detalhes e os melhores horarios.',
     };
   }
+
+  private buildReactivationFallback(
+    customerName: string,
+    daysInactive: number,
+  ) {
+    const safeName = customerName.trim() || 'cliente';
+
+    return {
+      headline: 'Reativacao de cliente',
+      message:
+        `Oi, ${safeName}! Tudo bem? Faz cerca de ${daysInactive} dias desde nosso ultimo contato. ` +
+        'Quis passar aqui para saber se voce quer retomar seus cuidados e te ajudar a encontrar a melhor opcao para voltar ao salao.',
+      reason:
+        'Mensagem acolhedora com foco em retomar a conversa sem parecer automatica ou agressiva.',
+    };
+  }
+}
+
+function getAiActivityTitle(type: AiLogType, fallbackUsed: boolean) {
+  const suffix = fallbackUsed ? ' com fallback' : '';
+
+  switch (type) {
+    case AiLogType.SUGGEST_REPLY:
+      return `IA gerou sugestao de resposta${suffix}`;
+    case AiLogType.SUMMARIZE_CONVERSATION:
+      return `IA resumiu a conversa${suffix}`;
+    case AiLogType.GENERATE_CAMPAIGN:
+      return `IA montou campanha${suffix}`;
+    case AiLogType.IDENTIFY_INTENT:
+      return `IA identificou a intencao${suffix}`;
+  }
+}
+
+function getAiActivityDescription(type: AiLogType, fallbackUsed: boolean) {
+  const mode = fallbackUsed ? 'usando o fallback seguro' : 'com resposta real';
+
+  switch (type) {
+    case AiLogType.SUGGEST_REPLY:
+      return `Uma sugestao de resposta foi gerada ${mode}.`;
+    case AiLogType.SUMMARIZE_CONVERSATION:
+      return `O resumo da conversa foi produzido ${mode}.`;
+    case AiLogType.GENERATE_CAMPAIGN:
+      return `Uma campanha foi gerada ${mode}.`;
+    case AiLogType.IDENTIFY_INTENT:
+      return `A intencao do cliente foi classificada ${mode}.`;
+  }
 }
 
 function sanitizeConversation(value: string) {
@@ -726,4 +865,16 @@ function titleCase(value: string) {
 
 function toJsonValue(value: unknown) {
   return JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
+}
+
+function inferDaysInactive(
+  contact: NonNullable<Awaited<ReturnType<AiService['getContactContext']>>>,
+) {
+  const referenceDate =
+    contact.lastInteractionAt ?? contact.updatedAt ?? contact.createdAt;
+
+  return Math.max(
+    0,
+    Math.floor((Date.now() - referenceDate.getTime()) / 86_400_000),
+  );
 }

@@ -93,3 +93,21 @@ export function extractConversationContext(limit = 8) {
 
   return messages.join('\n')
 }
+
+export function openWhatsAppChat(phone: string, text?: string) {
+  const normalizedPhone = phone.replace(/[^\d+]/g, '')
+
+  if (!normalizedPhone) {
+    return false
+  }
+
+  const url = new URL('https://web.whatsapp.com/send')
+  url.searchParams.set('phone', normalizedPhone)
+
+  if (text?.trim()) {
+    url.searchParams.set('text', text.trim())
+  }
+
+  window.location.assign(url.toString())
+  return true
+}

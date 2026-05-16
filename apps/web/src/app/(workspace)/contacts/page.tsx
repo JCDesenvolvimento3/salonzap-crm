@@ -13,7 +13,7 @@ import type {
   Note,
   Tag,
 } from '@salonzap/sdk'
-import { Brain, ClipboardCopy, FileText, MessageSquareText, Plus, Search, Sparkles, Trash2, Users } from 'lucide-react'
+import { Brain, ClipboardCopy, FileText, LayoutList, MessageSquareText, Plus, Search, Sparkles, Trash2, Users } from 'lucide-react'
 import { useAuth } from '@/components/providers/auth-provider'
 import { useToast } from '@/components/providers/toast-provider'
 import { Avatar } from '@/components/ui/avatar'
@@ -405,9 +405,9 @@ export default function ContactsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="CRM graph"
-        title="A premium contact base with fast scan and deep context"
-        description="Review lead state, sales notes, tags, and linked reminders from a cleaner master-detail view built for daily salon operations."
+        eyebrow="Base de clientes"
+        title="Clientes, contexto comercial e historico da relacao"
+        description="Consulte o perfil do cliente, acompanhe o funil, registre notas, gere respostas com IA e revise o historico operacional."
         actions={
           <Button onClick={openCreate}>
             <Plus className="h-4 w-4" />
@@ -421,7 +421,7 @@ export default function ContactsPage() {
         <MetricCard
           label="Com tags"
           value={loading ? '...' : contactMetrics.withTags}
-          helper="segmentados para campanhas e playbooks"
+          helper="segmentados para campanhas e atendimento"
         />
         <MetricCard
           label="Com notas"
@@ -931,6 +931,38 @@ export default function ContactsPage() {
                     />
                   )}
                 </div>
+              </div>
+
+              <div className="space-y-4 rounded-[28px] border border-[var(--border-subtle)] bg-white/[0.035] p-5">
+                <div className="flex items-center gap-3">
+                  <LayoutList className="h-5 w-5 text-[var(--accent)]" />
+                  <h3 className="text-xl font-semibold text-white">Historico do contato</h3>
+                </div>
+
+                {selectedDetail.activities.length ? (
+                  selectedDetail.activities.map((activity) => (
+                    <div key={activity.id} className="rounded-[24px] border border-[var(--border-subtle)] bg-white/[0.035] p-4">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <p className="font-medium text-white">{activity.title}</p>
+                          <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                            {activity.user?.name ?? 'Sistema'} - {formatDateTime(activity.createdAt)}
+                          </p>
+                        </div>
+                        <Badge tone={activity.action.includes('deleted') ? 'warning' : 'accent'}>
+                          {humanizeToken(activity.action)}
+                        </Badge>
+                      </div>
+                      <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">{activity.description}</p>
+                    </div>
+                  ))
+                ) : (
+                  <EmptyState
+                    title="Sem historico operacional"
+                    description="As criacoes, atualizacoes, movimentacoes e usos da IA deste contato aparecerao aqui."
+                    icon={<LayoutList className="h-5 w-5" />}
+                  />
+                )}
               </div>
             </div>
           ) : detailLoading ? (

@@ -5,9 +5,11 @@ export const STORAGE_KEYS = {
 
 export async function getStoredSession() {
   const values = await chrome.storage.local.get([STORAGE_KEYS.apiUrl, STORAGE_KEYS.token])
+  const defaultApiUrl =
+    import.meta.env.VITE_API_URL ?? 'https://salonzap-crm-api.vercel.app'
 
   return {
-    apiUrl: (values[STORAGE_KEYS.apiUrl] as string | undefined) ?? import.meta.env.VITE_API_URL ?? 'http://localhost:3333',
+    apiUrl: (values[STORAGE_KEYS.apiUrl] as string | undefined) ?? defaultApiUrl,
     token: (values[STORAGE_KEYS.token] as string | undefined) ?? null,
   }
 }

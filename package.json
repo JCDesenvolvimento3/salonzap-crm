@@ -15,13 +15,20 @@
     "build:api": "npm run build -w @salonzap/api",
     "build:web": "npm run build -w @salonzap/web",
     "build:extension": "npm run build -w @salonzap/extension",
+    "package:extension": "node scripts/package-extension.cjs",
     "build": "npm run build:sdk && npm run build:api && npm run build:web && npm run build:extension",
     "lint": "npm run lint --workspaces --if-present",
     "db:generate": "npm run prisma:generate -w @salonzap/api",
     "db:migrate": "npm run prisma:migrate -w @salonzap/api",
-    "db:seed": "npm run db:seed -w @salonzap/api"
+    "db:seed": "npm run db:seed -w @salonzap/api",
+    "db:seed:prod-support": "npm run db:seed:prod-support -w @salonzap/api",
+    "db:seed:demo": "npm run db:seed:demo -w @salonzap/api",
+    "db:purge-demo": "npm run db:purge-demo -w @salonzap/api",
+    "ops:purge-demo": "npm run db:purge-demo -w @salonzap/api",
+    "ops:ai-usage": "npm run ops:ai-usage -w @salonzap/api"
   },
   "devDependencies": {
+    "archiver": "^8.0.0",
     "concurrently": "^9.2.1",
     "vite": "^7.3.3"
   }

@@ -4,20 +4,27 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ActivityLogService } from '../common/services/activity-log.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   contactDetailInclude,
   contactSummaryInclude,
+  type ContactSummaryRecord,
   serializeContactDetail,
   serializeContactSummary,
 } from '../common/prisma/serializers';
 import { CreateContactDto } from './dto/create-contact.dto';
+import { ListRecoveryCandidatesDto } from './dto/list-recovery-candidates.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { SyncWhatsappContactDto } from './dto/sync-whatsapp-contact.dto';
 
 @Injectable()
 export class ContactsService {
-  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(ActivityLogService)
+    private readonly activityLogService: ActivityLogService,
+  ) {}
 
   async list(salonId: string, query?: string, stageId?: string) {
     const contacts = await this.prisma.contact.findMany({
@@ -43,19 +50,51 @@ export class ContactsService {
   }
 
   async detail(salonId: string, contactId: string) {
-    const contact = await this.prisma.contact.findFirst({
-      where: { id: contactId, salonId },
-      include: contactDetailInclude,
-    });
+    const [contact, activities] = await Promise.all([
+      this.prisma.contact.findFirst({
+        where: { id: contactId, salonId },
+        include: contactDetailInclude,
+      }),
+      this.activityLogService.listByEntity(salonId, 'contact', contactId, 20),
+    ]);
 
     if (!contact) {
       throw new NotFoundException('Contato não encontrado.');
     }
 
-    return serializeContactDetail(contact);
+    return {
+      ...serializeContactDetail(contact),
+      activities,
+    };
   }
 
-  async create(salonId: string, payload: CreateContactDto) {
+  async listRecoveryCandidates(
+    salonId: string,
+    query: ListRecoveryCandidatesDto,
+  ) {
+    const daysInactive = query.daysInactive ?? 45;
+    const limit = query.limit ?? 25;
+    const cutoff = new Date(Date.now() - daysInactive * 86_400_000);
+
+    const contacts = await this.prisma.contact.findMany({
+      where: {
+        salonId,
+        phone: {
+          not: null,
+        },
+      },
+      include: contactSummaryInclude,
+      orderBy: [{ lastInteractionAt: 'asc' }, { createdAt: 'asc' }],
+      take: Math.min(limit * 4, 200),
+    });
+
+    return contacts
+      .map((contact) => this.serializeRecoveryCandidate(contact))
+      .filter((candidate) => candidate.lastTouchAt <= cutoff)
+      .slice(0, limit);
+  }
+
+  async create(salonId: string, userId: string, payload: CreateContactDto) {
     const stageId = payload.stageId ?? (await this.getDefaultStageId(salonId));
     await this.ensureStageBelongsToSalon(salonId, stageId);
     await this.ensureTagsBelongToSalon(salonId, payload.tagIds);
@@ -84,10 +123,30 @@ export class ContactsService {
       include: contactSummaryInclude,
     });
 
+    await this.activityLogService.record({
+      salonId,
+      userId,
+      entityType: 'contact',
+      entityId: contact.id,
+      action: 'created',
+      title: 'Contato cadastrado',
+      description: `${contact.name} entrou no CRM pela origem ${contact.source}.`,
+      metadata: {
+        stageId: contact.stage.id,
+        stageName: contact.stage.name,
+        tags: contact.tags.map(({ tag }) => tag.name),
+      },
+    });
+
     return serializeContactSummary(contact);
   }
 
-  async update(salonId: string, contactId: string, payload: UpdateContactDto) {
+  async update(
+    salonId: string,
+    userId: string,
+    contactId: string,
+    payload: UpdateContactDto,
+  ) {
     await this.ensureContactExists(salonId, contactId);
 
     if (payload.stageId) {
@@ -148,10 +207,33 @@ export class ContactsService {
       });
     });
 
+    await this.activityLogService.record({
+      salonId,
+      userId,
+      entityType: 'contact',
+      entityId: contact.id,
+      action: 'updated',
+      title: 'Contato atualizado',
+      description: `${contact.name} teve dados comerciais atualizados.`,
+      metadata: {
+        stageId: contact.stage.id,
+        stageName: contact.stage.name,
+        tags: contact.tags.map(({ tag }) => tag.name),
+      },
+    });
+
     return serializeContactSummary(contact);
   }
 
-  async remove(salonId: string, contactId: string) {
+  async remove(salonId: string, userId: string, contactId: string) {
+    const contact = await this.prisma.contact.findFirst({
+      where: { id: contactId, salonId },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
     const result = await this.prisma.contact.deleteMany({
       where: { id: contactId, salonId },
     });
@@ -160,10 +242,26 @@ export class ContactsService {
       throw new NotFoundException('Contato não encontrado.');
     }
 
+    if (contact) {
+      await this.activityLogService.record({
+        salonId,
+        userId,
+        entityType: 'contact',
+        entityId: contact.id,
+        action: 'deleted',
+        title: 'Contato removido',
+        description: `${contact.name} foi removido do CRM.`,
+      });
+    }
+
     return { success: true as const };
   }
 
-  async syncFromWhatsapp(salonId: string, payload: SyncWhatsappContactDto) {
+  async syncFromWhatsapp(
+    salonId: string,
+    userId: string,
+    payload: SyncWhatsappContactDto,
+  ) {
     const normalizedName = payload.displayName.trim();
     const normalizedPhone = payload.phone?.trim() || null;
 
@@ -192,6 +290,20 @@ export class ContactsService {
         include: contactDetailInclude,
       });
 
+      await this.activityLogService.record({
+        salonId,
+        userId,
+        entityType: 'contact',
+        entityId: updated.id,
+        action: 'synced_from_whatsapp',
+        title: 'Contato sincronizado do WhatsApp',
+        description: `${updated.name} teve os dados atualizados a partir do WhatsApp Web.`,
+        metadata: {
+          phone: updated.phone,
+          whatsappName: updated.whatsappName,
+        },
+      });
+
       return serializeContactDetail(updated);
     }
 
@@ -209,6 +321,21 @@ export class ContactsService {
         lastInteractionAt: new Date(),
       },
       include: contactDetailInclude,
+    });
+
+    await this.activityLogService.record({
+      salonId,
+      userId,
+      entityType: 'contact',
+      entityId: created.id,
+      action: 'captured_from_whatsapp',
+      title: 'Contato capturado do WhatsApp',
+      description: `${created.name} foi criado a partir da conversa aberta no WhatsApp Web.`,
+      metadata: {
+        phone: created.phone,
+        stageId: created.stage.id,
+        stageName: created.stage.name,
+      },
     });
 
     return serializeContactDetail(created);
@@ -262,6 +389,28 @@ export class ContactsService {
     if (!contact) {
       throw new NotFoundException('Contato não encontrado.');
     }
+  }
+
+  private serializeRecoveryCandidate(contact: ContactSummaryRecord) {
+    const referenceDate =
+      contact.lastInteractionAt ?? contact.updatedAt ?? contact.createdAt;
+    const now = Date.now();
+    const daysWithoutReply = Math.max(
+      0,
+      Math.floor((now - referenceDate.getTime()) / 86_400_000),
+    );
+
+    return {
+      ...serializeContactSummary(contact),
+      lastTouchAt: referenceDate,
+      daysWithoutReply,
+      recommendedAction:
+        daysWithoutReply >= 60
+          ? 'reativar_com_oferta'
+          : daysWithoutReply >= 45
+            ? 'retomar_conversa'
+            : 'follow_up_leve',
+    };
   }
 }
 

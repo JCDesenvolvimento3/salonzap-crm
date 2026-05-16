@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ActivityLogService } from '../common/services/activity-log.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   contactSummaryInclude,
@@ -13,7 +14,11 @@ import {
 
 @Injectable()
 export class KanbanService {
-  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(ActivityLogService)
+    private readonly activityLogService: ActivityLogService,
+  ) {}
 
   async board(salonId: string) {
     const stages = await this.prisma.stage.findMany({
@@ -35,7 +40,12 @@ export class KanbanService {
     };
   }
 
-  async move(salonId: string, contactId: string, targetStageId: string) {
+  async move(
+    salonId: string,
+    userId: string,
+    contactId: string,
+    targetStageId: string,
+  ) {
     const [contact, stage] = await Promise.all([
       this.prisma.contact.findFirst({
         where: { id: contactId, salonId },
@@ -60,6 +70,21 @@ export class KanbanService {
         lastInteractionAt: new Date(),
       },
       include: contactSummaryInclude,
+    });
+
+    await this.activityLogService.record({
+      salonId,
+      userId,
+      entityType: 'contact',
+      entityId: updated.id,
+      action: 'moved_stage',
+      title: 'Contato movido no funil',
+      description: `${updated.name} foi movido para ${updated.stage.name}.`,
+      metadata: {
+        fromStageId: contact.stageId,
+        toStageId: updated.stage.id,
+        toStageName: updated.stage.name,
+      },
     });
 
     return serializeContactSummary(updated);

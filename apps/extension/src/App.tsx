@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react'
-import { MessageSquareText, PanelsTopLeft, Sparkles } from 'lucide-react'
+import { LayoutDashboard, MessageSquareText, PanelsTopLeft, Sparkles } from 'lucide-react'
 import { getStoredSession } from './lib/browser-storage'
 
+const DEFAULT_API_URL =
+  import.meta.env.VITE_API_URL ?? 'https://salonzap-crm-api.vercel.app'
+const DEFAULT_WEB_URL =
+  import.meta.env.VITE_WEB_URL ?? 'https://salonzap-crm-web.vercel.app'
+
 function App() {
-  const [apiUrl, setApiUrl] = useState('http://localhost:3333')
+  const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL)
   const [connected, setConnected] = useState(false)
 
   useEffect(() => {
@@ -23,13 +28,23 @@ function App() {
           <div>
             <p className="szp-kicker">SalonZap CRM</p>
             <h1>Extensao conectada ao WhatsApp Web</h1>
-            <p className="szp-muted">A mesma linguagem visual premium agora acompanha o time tambem dentro do navegador.</p>
+            <p className="szp-muted">O mesmo fluxo operacional do CRM acompanha o time tambem dentro do navegador.</p>
           </div>
         </div>
 
         <div className="szp-popup-info">
-          <p><strong>Status:</strong> {connected ? 'autenticada' : 'aguardando login na sidebar'}</p>
-          <p><strong>API:</strong> {apiUrl}</p>
+            <p><strong>Status:</strong> {connected ? 'autenticada' : 'aguardando login na sidebar'}</p>
+            <p><strong>API:</strong> {apiUrl}</p>
+        </div>
+
+        <div className="szp-popup-actions">
+          <a className="szp-secondary szp-popup-button" href="https://web.whatsapp.com" target="_blank" rel="noreferrer">
+            Abrir WhatsApp Web
+          </a>
+          <a className="szp-secondary szp-popup-button" href={`${DEFAULT_WEB_URL}/contacts`} target="_blank" rel="noreferrer">
+            <LayoutDashboard size={16} />
+            Abrir painel
+          </a>
         </div>
 
         <div className="szp-popup-grid">
@@ -41,14 +56,14 @@ function App() {
           <div className="szp-popup-grid-card">
             <PanelsTopLeft size={18} />
             <p><strong>Funil sincronizado</strong></p>
-            <p className="szp-muted">Mova contatos entre stages sem sair do WhatsApp Web.</p>
+            <p className="szp-muted">Mova contatos entre etapas sem sair do WhatsApp Web.</p>
           </div>
         </div>
 
         <ol className="szp-popup-steps">
           <li>1. Abra `web.whatsapp.com`.</li>
-          <li>2. Entre na sidebar com `admin@salonzap.local`.</li>
-          <li>3. Clique em uma resposta rapida ou mova o contato no funil.</li>
+          <li>2. Entre na sidebar com a mesma conta usada no painel web.</li>
+          <li>3. Clique em uma resposta rapida, mova o contato no funil ou use o botao de IA.</li>
         </ol>
       </div>
     </main>

@@ -4,13 +4,18 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ActivityLogService } from '../common/services/activity-log.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateQuickReplyDto } from './dto/create-quick-reply.dto';
 import { UpdateQuickReplyDto } from './dto/update-quick-reply.dto';
 
 @Injectable()
 export class QuickRepliesService {
-  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(ActivityLogService)
+    private readonly activityLogService: ActivityLogService,
+  ) {}
 
   async list(salonId: string) {
     return this.prisma.quickReply.findMany({
@@ -26,7 +31,7 @@ export class QuickRepliesService {
   ) {
     await this.ensureShortcutAvailable(salonId, payload.shortcut);
 
-    return this.prisma.quickReply.create({
+    const quickReply = await this.prisma.quickReply.create({
       data: {
         salonId,
         authorId,
@@ -36,10 +41,27 @@ export class QuickRepliesService {
         category: payload.category?.trim() || null,
       },
     });
+
+    await this.activityLogService.record({
+      salonId,
+      userId: authorId,
+      entityType: 'quick_reply',
+      entityId: quickReply.id,
+      action: 'created',
+      title: 'Resposta rapida criada',
+      description: `${quickReply.title} foi adicionada a biblioteca compartilhada.`,
+      metadata: {
+        shortcut: quickReply.shortcut,
+        category: quickReply.category,
+      },
+    });
+
+    return quickReply;
   }
 
   async update(
     salonId: string,
+    userId: string,
     quickReplyId: string,
     payload: UpdateQuickReplyDto,
   ) {
@@ -53,7 +75,7 @@ export class QuickRepliesService {
       );
     }
 
-    return this.prisma.quickReply.update({
+    const quickReply = await this.prisma.quickReply.update({
       where: { id: quickReplyId },
       data: {
         ...(payload.title !== undefined ? { title: payload.title } : {}),
@@ -66,15 +88,51 @@ export class QuickRepliesService {
           : {}),
       },
     });
+
+    await this.activityLogService.record({
+      salonId,
+      userId,
+      entityType: 'quick_reply',
+      entityId: quickReply.id,
+      action: 'updated',
+      title: 'Resposta rapida atualizada',
+      description: `${quickReply.title} teve o roteiro revisado.`,
+      metadata: {
+        shortcut: quickReply.shortcut,
+        category: quickReply.category,
+      },
+    });
+
+    return quickReply;
   }
 
-  async remove(salonId: string, quickReplyId: string) {
+  async remove(salonId: string, userId: string, quickReplyId: string) {
+    const quickReply = await this.prisma.quickReply.findFirst({
+      where: { id: quickReplyId, salonId },
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+
     const result = await this.prisma.quickReply.deleteMany({
       where: { id: quickReplyId, salonId },
     });
 
     if (!result.count) {
       throw new NotFoundException('Resposta rápida não encontrada.');
+    }
+
+    if (quickReply) {
+      await this.activityLogService.record({
+        salonId,
+        userId,
+        entityType: 'quick_reply',
+        entityId: quickReply.id,
+        action: 'deleted',
+        title: 'Resposta rapida removida',
+        description: `${quickReply.title} saiu da biblioteca compartilhada.`,
+      });
     }
 
     return { success: true as const };

@@ -1,4 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   serializeStage,
@@ -10,7 +11,10 @@ import { UpdateSettingsDto } from './dto/update-settings.dto';
 
 @Injectable()
 export class SettingsService {
-  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(ConfigService) private readonly configService: ConfigService,
+  ) {}
 
   async profile(userId: string, salonId: string) {
     const [user, tags, stages] = await Promise.all([
@@ -60,6 +64,18 @@ export class SettingsService {
         ...serializeStage(stage),
         contactsCount: stage._count.contacts,
       })),
+      runtime: {
+        siteUrl:
+          this.configService.get<string>('NEXT_PUBLIC_SITE_URL')?.trim() ||
+          null,
+        aiProvider: 'OpenRouter',
+        aiModel:
+          this.configService.get<string>('OPENROUTER_MODEL')?.trim() ||
+          'deepseek/deepseek-v4-flash:free',
+        aiEnabled: Boolean(
+          this.configService.get<string>('OPENROUTER_API_KEY')?.trim(),
+        ),
+      },
     };
   }
 

@@ -31,7 +31,7 @@ export class CampaignsController {
 
   @Post()
   create(@CurrentUser() user: RequestUser, @Body() body: CreateCampaignDto) {
-    return this.campaignsService.create(user.salonId, body);
+    return this.campaignsService.create(user.salonId, user.id, body);
   }
 
   @Patch(':id')
@@ -40,11 +40,16 @@ export class CampaignsController {
     @Param('id') campaignId: string,
     @Body() body: UpdateCampaignDto,
   ) {
-    return this.campaignsService.update(user.salonId, campaignId, body);
+    return this.campaignsService.update(
+      user.salonId,
+      user.id,
+      campaignId,
+      body,
+    );
   }
 
   @Delete(':id')
   remove(@CurrentUser() user: RequestUser, @Param('id') campaignId: string) {
-    return this.campaignsService.remove(user.salonId, campaignId);
+    return this.campaignsService.remove(user.salonId, user.id, campaignId);
   }
 }

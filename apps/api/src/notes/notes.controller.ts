@@ -43,11 +43,11 @@ export class NotesController {
     @Param('id') noteId: string,
     @Body() body: UpdateNoteDto,
   ) {
-    return this.notesService.update(user.salonId, noteId, body);
+    return this.notesService.update(user.salonId, user.id, noteId, body);
   }
 
   @Delete(':id')
   remove(@CurrentUser() user: RequestUser, @Param('id') noteId: string) {
-    return this.notesService.remove(user.salonId, noteId);
+    return this.notesService.remove(user.salonId, user.id, noteId);
   }
 }

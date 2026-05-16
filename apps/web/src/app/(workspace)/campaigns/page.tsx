@@ -187,16 +187,16 @@ export default function CampaignsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Outbound engine"
-        title="Campaign composition that feels intentional instead of improvised"
-        description="Shape recovery and activation sends from a cleaner composer, with better hierarchy for schedule, audience, and message quality."
+        eyebrow="Campanhas"
+        title="Campanhas de relacionamento e recuperacao"
+        description="Crie campanhas reais para ativacao, reengajamento e confirmacao de agenda, com status e mensagem ligados a operacao."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <MetricCard label="Drafts" value={loading ? '...' : metrics.draft} helper="rascunhos ainda em preparo" />
+        <MetricCard label="Rascunhos" value={loading ? '...' : metrics.draft} helper="campanhas ainda em preparo" />
         <MetricCard label="Agendadas" value={loading ? '...' : metrics.scheduled} helper="entrando na fila de envio" />
         <MetricCard label="Enviadas" value={loading ? '...' : metrics.sent} helper="campanhas ja concluidas" />
-        <MetricCard label="Editor" value={editingId ? 'Edit' : 'New'} helper="mesmo fluxo, agora com UX premium" />
+        <MetricCard label="Edicao" value={editingId ? 'Editando' : 'Nova'} helper="campanha ativa no formulario" />
       </div>
 
       {error ? (
@@ -213,7 +213,7 @@ export default function CampaignsPage() {
             </div>
             <div>
               <p className="text-sm text-[var(--text-secondary)]">{editingId ? 'Editar campanha' : 'Nova campanha'}</p>
-              <h2 className="text-2xl font-semibold text-white">Composer</h2>
+              <h2 className="text-2xl font-semibold text-white">Formulario da campanha</h2>
             </div>
           </div>
 
@@ -295,9 +295,10 @@ export default function CampaignsPage() {
                   value={form.status}
                   onChange={(event) => setForm((current) => ({ ...current, status: event.target.value as Campaign['status'] }))}
                 >
-                  <option value="DRAFT">Draft</option>
-                  <option value="SCHEDULED">Scheduled</option>
-                  <option value="SENT">Sent</option>
+                  <option value="DRAFT">Rascunho</option>
+                  <option value="SCHEDULED">Agendada</option>
+                  <option value="SENT">Enviada</option>
+                  <option value="PAUSED">Pausada</option>
                 </Select>
               </Field>
               <Field label="Agendar para">
@@ -345,8 +346,8 @@ export default function CampaignsPage() {
         <Card className="p-6">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-[var(--text-secondary)]">Campaign list</p>
-              <h2 className="text-2xl font-semibold text-white">Recent sends and drafts</h2>
+              <p className="text-sm text-[var(--text-secondary)]">Lista de campanhas</p>
+              <h2 className="text-2xl font-semibold text-white">Campanhas recentes</h2>
             </div>
             <Badge tone="accent">{campaigns.length} itens</Badge>
           </div>

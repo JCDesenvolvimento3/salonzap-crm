@@ -123,16 +123,16 @@ export default function RemindersPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Follow-up stack"
-        title="A reminder view built for calm daily execution"
-        description="Plan next actions, keep deadlines visible, and separate pending work from completed follow-up without touching the backend model."
+        eyebrow="Lembretes"
+        title="Agenda de follow-up do salao"
+        description="Organize proximos passos, acompanhe vencimentos e conclua follow-ups ligados aos clientes da operacao."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard label="Pendentes" value={loading ? '...' : metrics.pending} helper="acoes ainda abertas" />
         <MetricCard label="Concluidos" value={loading ? '...' : metrics.done} helper="follow-ups finalizados" />
         <MetricCard label="Vinculados" value={loading ? '...' : metrics.linked} helper="ligados diretamente a contatos" />
-        <MetricCard label="Filtro" value={statusFilter} helper="priorizacao visual da agenda" />
+        <MetricCard label="Filtro" value={statusFilter === 'ALL' ? 'Todos' : humanizeToken(statusFilter)} helper="recorte atual da agenda" />
       </div>
 
       {error ? (
@@ -145,7 +145,7 @@ export default function RemindersPage() {
         <Card variant="spotlight" className="p-6">
           <div>
             <p className="text-sm text-[var(--text-secondary)]">{editingId ? 'Editar lembrete' : 'Novo lembrete'}</p>
-            <h2 className="mt-1 text-2xl font-semibold text-white">Agenda composer</h2>
+            <h2 className="mt-1 text-2xl font-semibold text-white">Formulario do lembrete</h2>
           </div>
 
           <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
@@ -220,8 +220,8 @@ export default function RemindersPage() {
         <Card className="p-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-sm text-[var(--text-secondary)]">Reminder queue</p>
-              <h2 className="text-2xl font-semibold text-white">Daily follow-up board</h2>
+              <p className="text-sm text-[var(--text-secondary)]">Fila de lembretes</p>
+              <h2 className="text-2xl font-semibold text-white">Follow-ups do dia</h2>
             </div>
             <div className="flex flex-wrap gap-2">
               {(['ALL', 'PENDING', 'DONE'] as const).map((value) => (

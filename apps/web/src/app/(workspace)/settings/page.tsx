@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react'
 import type { SettingsProfile, Tag } from '@salonzap/sdk'
-import { Palette, Settings2, Tags, Trash2 } from 'lucide-react'
+import { Link2, Palette, Settings2, Tags, Trash2, UserCircle2 } from 'lucide-react'
 import { useAuth } from '@/components/providers/auth-provider'
 import { useTheme } from '@/components/providers/theme-provider'
 import { useToast } from '@/components/providers/toast-provider'
@@ -18,6 +18,7 @@ import { MetricCard } from '@/components/ui/metric-card'
 import { PageHeader } from '@/components/ui/page-header'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
+import { API_URL } from '@/lib/env'
 import { hexToRgba } from '@/lib/utils'
 
 const emptyTag = {
@@ -150,16 +151,16 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Operations setup"
-        title="Brand, taxonomy, and theme controls in one calmer panel"
-        description="Tune the salon identity, tag system, and workspace theme without touching the backend architecture or losing extension compatibility."
+        eyebrow="Configuracoes"
+        title="Dados do salao, usuario e ambiente"
+        description="Revise identidade do workspace, tags, tema ativo, URL da API e status real da IA usada pelo SalonZap."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <MetricCard label="Theme" value={theme === 'obsidian' ? 'Obsidian' : 'Graphite'} helper="modo premium ativo no workspace" />
+        <MetricCard label="Tema" value={theme === 'obsidian' ? 'Obsidian' : 'Graphite'} helper="tema ativo no workspace" />
         <MetricCard label="Tags" value={loading ? '...' : profile?.tags.length ?? 0} helper="classificacoes disponiveis" />
-        <MetricCard label="Stages" value={loading ? '...' : profile?.stages.length ?? 0} helper="etapas monitoradas no funil" />
-        <MetricCard label="Brand color" value={loading ? '...' : profile?.salon.brandColor ?? '#'} helper="cor principal do salao" />
+        <MetricCard label="Etapas" value={loading ? '...' : profile?.stages.length ?? 0} helper="etapas monitoradas no funil" />
+        <MetricCard label="Cor da marca" value={loading ? '...' : profile?.salon.brandColor ?? '#'} helper="cor principal do salao" />
       </div>
 
       {error ? (
@@ -176,15 +177,15 @@ export default function SettingsPage() {
       ) : (
         <div className="grid gap-6 xl:grid-cols-[1fr_0.95fr]">
           <Card variant="spotlight" className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-[18px] border border-[var(--border-subtle)] bg-white/6 text-[var(--accent)]">
-                <Settings2 className="h-5 w-5" />
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[18px] border border-[var(--border-subtle)] bg-white/6 text-[var(--accent)]">
+                  <Settings2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-[var(--text-secondary)]">Workspace</p>
+                  <h2 className="text-2xl font-semibold text-white">Identidade do salao</h2>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-[var(--text-secondary)]">Profile setup</p>
-                <h2 className="text-2xl font-semibold text-white">Salon identity</h2>
-              </div>
-            </div>
 
             {profile ? (
               <div className="mt-6 space-y-5">
@@ -220,17 +221,17 @@ export default function SettingsPage() {
                 </Field>
 
                 <Card variant="muted" className="p-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--text-muted)]">Theme system</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--text-muted)]">Tema do workspace</p>
                   <div className="mt-4 grid gap-3 md:grid-cols-2">
                     <ThemePreset
                       title="Obsidian"
-                      description="Sharper blues, colder contrast, more executive feel."
+                      description="Contraste mais frio para uma leitura mais intensa da operacao."
                       active={theme === 'obsidian'}
                       onClick={() => setTheme('obsidian')}
                     />
                     <ThemePreset
                       title="Graphite"
-                      description="Warmer neutrals and a softer green accent for longer sessions."
+                      description="Neutros mais quentes para rotinas longas de atendimento."
                       active={theme === 'graphite'}
                       onClick={() => setTheme('graphite')}
                     />
@@ -238,7 +239,7 @@ export default function SettingsPage() {
                 </Card>
 
                 <Card variant="muted" className="p-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--text-muted)]">Stages atuais</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--text-muted)]">Etapas atuais</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {profile.stages.map((stage) => (
                       <Badge
@@ -259,6 +260,34 @@ export default function SettingsPage() {
           </Card>
 
           <div className="space-y-6">
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[18px] border border-[var(--border-subtle)] bg-white/6 text-[var(--accent)]">
+                  <UserCircle2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-[var(--text-secondary)]">Conta logada</p>
+                  <h2 className="text-2xl font-semibold text-white">Usuario e ambiente</h2>
+                </div>
+              </div>
+
+              {profile ? (
+                <div className="mt-6 space-y-3">
+                  <InfoRow label="Conta principal" value={profile.user.email} />
+                  <InfoRow label="Perfil" value={profile.user.role} />
+                  <InfoRow label="Plano atual" value="Nao configurado" />
+                  <InfoRow label="API usada" value={API_URL} mono />
+                  <InfoRow
+                    label="Status da IA"
+                    value={profile.runtime.aiEnabled ? `${profile.runtime.aiProvider} ativa` : 'IA nao configurada'}
+                  />
+                  <InfoRow label="Modelo da IA" value={profile.runtime.aiModel} />
+                  <InfoRow label="Site publico" value={profile.runtime.siteUrl ?? 'Nao configurado'} mono />
+                  <InfoRow label="Status da extensao" value="Validacao manual no WhatsApp Web" />
+                </div>
+              ) : null}
+            </Card>
+
             <Card className="p-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-[18px] border border-[var(--border-subtle)] bg-white/6 text-[var(--accent)]">
@@ -329,12 +358,19 @@ export default function SettingsPage() {
             </Card>
 
             <Card className="p-6">
-              <p className="text-sm text-[var(--text-secondary)]">Extension readiness</p>
-              <h2 className="mt-1 text-2xl font-semibold text-white">Checklist da extensao</h2>
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[18px] border border-[var(--border-subtle)] bg-white/6 text-[var(--accent)]">
+                  <Link2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-[var(--text-secondary)]">Extensao Chrome</p>
+                  <h2 className="mt-1 text-2xl font-semibold text-white">Checklist operacional</h2>
+                </div>
+              </div>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--text-secondary)]">
-                <li>1. Entre com o mesmo usuario seed no painel e na sidebar do WhatsApp Web.</li>
-                <li>2. Garanta a API em `http://localhost:3333` ou ajuste a variavel do build da extensao.</li>
-                <li>3. Reaproveite as mesmas tags, respostas rapidas e stages ja sincronizados pelo backend.</li>
+                <li>1. Entre com a mesma conta operacional usada no painel web.</li>
+                <li>2. Garanta que a extensao aponte para a API publicada da sua operacao.</li>
+                <li>3. Valide sync de contato, stage, nota e botao de IA dentro do WhatsApp Web real.</li>
               </ul>
             </Card>
           </div>
@@ -368,5 +404,14 @@ function ThemePreset({
       <p className="font-semibold text-white">{title}</p>
       <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{description}</p>
     </button>
+  )
+}
+
+function InfoRow({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div className="rounded-[18px] border border-[var(--border-subtle)] bg-white/[0.035] px-4 py-3">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">{label}</p>
+      <p className={`mt-2 break-all text-sm text-white ${mono ? 'mono' : ''}`}>{value}</p>
+    </div>
   )
 }

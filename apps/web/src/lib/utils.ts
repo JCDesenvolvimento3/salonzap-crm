@@ -61,6 +61,42 @@ export function humanizeToken(value?: string | null) {
     return 'Sem status'
   }
 
+  const dictionary: Record<string, string> = {
+    DRAFT: 'Rascunho',
+    SCHEDULED: 'Agendada',
+    SENT: 'Enviada',
+    PAUSED: 'Pausada',
+    PENDING: 'Pendente',
+    DONE: 'Concluido',
+    LOW: 'Baixa',
+    MEDIUM: 'Media',
+    HIGH: 'Alta',
+    POSITIVE: 'Positivo',
+    NEUTRAL: 'Neutro',
+    NEGATIVE: 'Negativo',
+    CREATED: 'Criado',
+    UPDATED: 'Atualizado',
+    DELETED: 'Removido',
+    COMPLETED: 'Concluido',
+    MOVED_STAGE: 'Mudou de etapa',
+    NOTE_CREATED: 'Nota criada',
+    NOTE_UPDATED: 'Nota atualizada',
+    NOTE_DELETED: 'Nota removida',
+    AI_SUCCESS: 'IA real',
+    AI_FALLBACK: 'Fallback seguro',
+    SYNCED_FROM_WHATSAPP: 'Sync do WhatsApp',
+    CAPTURED_FROM_WHATSAPP: 'Capturado do WhatsApp',
+    RESCHEDULE_OR_CANCELLATION: 'Remarcacao ou cancelamento',
+    PRICE_QUOTE: 'Pedido de preco',
+    BOOKING: 'Agendamento',
+    GENERAL_SUPPORT: 'Atendimento geral',
+  }
+
+  const normalized = value.trim().toUpperCase()
+  if (dictionary[normalized]) {
+    return dictionary[normalized]
+  }
+
   return value
     .toLowerCase()
     .replace(/_/g, ' ')

@@ -1,2 +1,7 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333'
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://salonzap-crm-api.vercel.app'
 export const SESSION_STORAGE_KEY = 'salonzap:session'
+export const LOGOUT_REASON_STORAGE_KEY = 'salonzap:logout-reason'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://salonzap-crm-web.vercel.app'
+export const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? 'jsstorebrazil@gmail.com'
+export const SALES_EMAIL = process.env.NEXT_PUBLIC_SALES_EMAIL ?? SUPPORT_EMAIL
+export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''

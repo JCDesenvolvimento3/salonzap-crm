@@ -1,4 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ActivityLogService } from '../common/services/activity-log.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   reminderInclude,
@@ -9,7 +10,11 @@ import { UpdateReminderDto } from './dto/update-reminder.dto';
 
 @Injectable()
 export class RemindersService {
-  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(PrismaService) private readonly prisma: PrismaService,
+    @Inject(ActivityLogService)
+    private readonly activityLogService: ActivityLogService,
+  ) {}
 
   async list(salonId: string, status?: 'PENDING' | 'DONE') {
     const reminders = await this.prisma.reminder.findMany({
@@ -40,11 +45,27 @@ export class RemindersService {
       include: reminderInclude,
     });
 
+    await this.activityLogService.record({
+      salonId,
+      userId: ownerId,
+      entityType: 'reminder',
+      entityId: reminder.id,
+      action: 'created',
+      title: 'Lembrete criado',
+      description: `${reminder.title} foi agendado${reminder.contact?.name ? ` para ${reminder.contact.name}` : ''}.`,
+      metadata: {
+        status: reminder.status,
+        dueAt: reminder.dueAt.toISOString(),
+        contactId: reminder.contactId,
+      },
+    });
+
     return serializeReminder(reminder);
   }
 
   async update(
     salonId: string,
+    userId: string,
     reminderId: string,
     payload: UpdateReminderDto,
   ) {
@@ -69,16 +90,57 @@ export class RemindersService {
       include: reminderInclude,
     });
 
+    await this.activityLogService.record({
+      salonId,
+      userId,
+      entityType: 'reminder',
+      entityId: reminder.id,
+      action: reminder.status === 'DONE' ? 'completed' : 'updated',
+      title:
+        reminder.status === 'DONE'
+          ? 'Lembrete concluido'
+          : 'Lembrete atualizado',
+      description:
+        reminder.status === 'DONE'
+          ? `${reminder.title} foi marcado como concluido.`
+          : `${reminder.title} teve os detalhes atualizados.`,
+      metadata: {
+        status: reminder.status,
+        dueAt: reminder.dueAt.toISOString(),
+        contactId: reminder.contactId,
+      },
+    });
+
     return serializeReminder(reminder);
   }
 
-  async remove(salonId: string, reminderId: string) {
+  async remove(salonId: string, userId: string, reminderId: string) {
+    const reminder = await this.prisma.reminder.findFirst({
+      where: { id: reminderId, salonId },
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+
     const result = await this.prisma.reminder.deleteMany({
       where: { id: reminderId, salonId },
     });
 
     if (!result.count) {
       throw new NotFoundException('Lembrete não encontrado.');
+    }
+
+    if (reminder) {
+      await this.activityLogService.record({
+        salonId,
+        userId,
+        entityType: 'reminder',
+        entityId: reminder.id,
+        action: 'deleted',
+        title: 'Lembrete removido',
+        description: `${reminder.title} foi removido da agenda operacional.`,
+      });
     }
 
     return { success: true as const };

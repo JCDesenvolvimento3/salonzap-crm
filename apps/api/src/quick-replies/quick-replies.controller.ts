@@ -40,11 +40,16 @@ export class QuickRepliesController {
     @Param('id') quickReplyId: string,
     @Body() body: UpdateQuickReplyDto,
   ) {
-    return this.quickRepliesService.update(user.salonId, quickReplyId, body);
+    return this.quickRepliesService.update(
+      user.salonId,
+      user.id,
+      quickReplyId,
+      body,
+    );
   }
 
   @Delete(':id')
   remove(@CurrentUser() user: RequestUser, @Param('id') quickReplyId: string) {
-    return this.quickRepliesService.remove(user.salonId, quickReplyId);
+    return this.quickRepliesService.remove(user.salonId, user.id, quickReplyId);
   }
 }

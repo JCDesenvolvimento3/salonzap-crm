@@ -1,0 +1,2 @@
+-- This migration was superseded before any schema-level changes were required.
+-- Password reset is handled via signed tokens and does not create database tables.

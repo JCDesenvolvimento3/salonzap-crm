@@ -20,6 +20,19 @@ export type AuthSession = {
   salon: SalonProfile
 }
 
+export type RegisterWorkspacePayload = {
+  salonName: string
+  name: string
+  email: string
+  password: string
+}
+
+export type GoogleAuthPayload = {
+  code: string
+  redirectUri: string
+  salonName?: string
+}
+
 export type Stage = {
   id: string
   name: string
@@ -93,9 +106,21 @@ export type Campaign = {
   message: string
   audience: string
   scheduledFor: string | null
-  status: 'DRAFT' | 'SCHEDULED' | 'SENT'
+  status: 'DRAFT' | 'SCHEDULED' | 'SENT' | 'PAUSED'
   createdAt: string
   updatedAt: string
+}
+
+export type ActivityLogEntry = {
+  id: string
+  entityType: string
+  entityId: string | null
+  action: string
+  title: string
+  description: string
+  metadata: Record<string, unknown> | null
+  createdAt: string
+  user: Pick<AuthUser, 'id' | 'name'> | null
 }
 
 export type AiResponseSource = 'openrouter' | 'fallback'
@@ -130,23 +155,47 @@ export type AiCampaignResult = AiResponseMeta & {
   message: string
 }
 
+export type AiReactivationMessageResult = AiResponseMeta & {
+  headline: string
+  message: string
+  reason: string
+}
+
 export type DashboardSummary = {
   totals: {
     contacts: number
+    activeContacts: number
+    contactsCreatedToday: number
     remindersDue: number
+    remindersOverdue: number
+    remindersToday: number
     campaignsScheduled: number
+    campaignsSent: number
     quickReplies: number
+    aiUsageToday: number
+    aiLogsTotal: number
+    aiSuccessCount: number
+    aiFallbackCount: number
   }
   conversionRate: number
   contactsThisMonth: number
   stageDistribution: Array<Stage & { contactsCount: number }>
   recentNotes: Note[]
   upcomingReminders: Reminder[]
+  recentActivities: ActivityLogEntry[]
+  latestActivity: ActivityLogEntry | null
 }
 
 export type ContactDetail = Contact & {
   notes: Note[]
   reminders: Reminder[]
+  activities: ActivityLogEntry[]
+}
+
+export type RecoveryContactCandidate = Contact & {
+  lastTouchAt: string
+  daysWithoutReply: number
+  recommendedAction: 'follow_up_leve' | 'retomar_conversa' | 'reativar_com_oferta'
 }
 
 export type KanbanBoard = {
@@ -158,6 +207,12 @@ export type SettingsProfile = {
   user: AuthUser
   tags: Tag[]
   stages: Array<Stage & { contactsCount: number }>
+  runtime: {
+    siteUrl: string | null
+    aiProvider: string
+    aiModel: string
+    aiEnabled: boolean
+  }
 }
 
 type RequestConfig = {
@@ -203,14 +258,28 @@ async function request<T>(
   { method = 'GET', body, token }: RequestConfig,
   onUnauthorized?: () => void,
 ): Promise<T> {
-  const response = await fetch(createUrl(baseUrl, path), {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  })
+  let response: Response
+
+  try {
+    response = await fetch(createUrl(baseUrl, path), {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    })
+  } catch (error) {
+    throw new ApiError(
+      error instanceof Error && /fetch/i.test(error.message)
+        ? 'Nao foi possivel conectar com a API do SalonZap. Verifique a URL configurada e tente novamente.'
+        : error instanceof Error
+          ? error.message
+          : 'Nao foi possivel conectar com a API do SalonZap.',
+      0,
+      null,
+    )
+  }
 
   const contentType = response.headers.get('content-type')
   const payload = contentType?.includes('application/json') ? await response.json() : await response.text()
@@ -239,10 +308,31 @@ export function createApiClient({ baseUrl, getToken, onUnauthorized }: ApiClient
   return {
     login: (body: { email: string; password: string }) =>
       request<AuthSession>(baseUrl, '/auth/login', { method: 'POST', body }, onUnauthorized),
+    register: (body: RegisterWorkspacePayload) =>
+      request<AuthSession>(baseUrl, '/auth/register', { method: 'POST', body }, onUnauthorized),
+    googleAuth: (body: GoogleAuthPayload) =>
+      request<AuthSession>(baseUrl, '/auth/google', { method: 'POST', body }, onUnauthorized),
+    forgotPassword: (body: { email: string }) =>
+      request<{ success: true }>(baseUrl, '/auth/forgot-password', { method: 'POST', body }, onUnauthorized),
+    resetPassword: (body: { token: string; password: string }) =>
+      request<{ success: true }>(baseUrl, '/auth/reset-password', { method: 'POST', body }, onUnauthorized),
     me: () => authed<AuthSession>('/auth/me'),
     dashboard: () => authed<DashboardSummary>('/dashboard/summary'),
     contacts: (search?: { query?: string; stageId?: string }) =>
       authed<Contact[]>(`/contacts${createQuery(search)}`),
+    recoveryCandidates: (search?: { daysInactive?: number; limit?: number }) =>
+      authed<RecoveryContactCandidate[]>(
+        `/contacts/recovery-candidates${createQuery(
+          search
+            ? Object.fromEntries(
+                Object.entries(search).map(([key, value]) => [
+                  key,
+                  value?.toString(),
+                ]),
+              )
+            : undefined,
+        )}`,
+      ),
     contact: (id: string) => authed<ContactDetail>(`/contacts/${id}`),
     createContact: (body: Record<string, unknown>) => authed<Contact>('/contacts', { method: 'POST', body }),
     updateContact: (id: string, body: Record<string, unknown>) =>
@@ -293,6 +383,15 @@ export function createApiClient({ baseUrl, getToken, onUnauthorized }: ApiClient
       authed<AiIntentResult>('/ai/identify-intent', { method: 'POST', body }),
     aiGenerateCampaign: (body: { prompt: string; objective?: string; audienceHint?: string }) =>
       authed<AiCampaignResult>('/ai/generate-campaign', { method: 'POST', body }),
+    aiGenerateReactivationMessage: (body: {
+      contactId: string
+      daysInactive?: number
+      objective?: string
+    }) =>
+      authed<AiReactivationMessageResult>('/ai/generate-reactivation-message', {
+        method: 'POST',
+        body,
+      }),
   }
 }
 

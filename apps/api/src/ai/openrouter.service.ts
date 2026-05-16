@@ -47,8 +47,8 @@ export class OpenRouterService {
   private getAppReferer() {
     return (
       this.configService.get<string>('OPENROUTER_HTTP_REFERER')?.trim() ||
-      this.configService.get<string>('NEXT_PUBLIC_API_URL')?.trim() ||
-      'http://localhost:3000'
+      this.configService.get<string>('NEXT_PUBLIC_SITE_URL')?.trim() ||
+      'https://salonzap-crm-web.vercel.app'
     );
   }
 

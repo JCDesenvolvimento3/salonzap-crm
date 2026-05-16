@@ -29,6 +29,7 @@ export class KanbanController {
   move(@CurrentUser() user: RequestUser, @Body() body: MoveContactDto) {
     return this.kanbanService.move(
       user.salonId,
+      user.id,
       body.contactId,
       body.targetStageId,
     );

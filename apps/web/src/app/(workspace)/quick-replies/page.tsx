@@ -112,16 +112,16 @@ export default function QuickRepliesPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Playbooks"
-        title="Fast replies that feel polished, reusable, and team-ready"
-        description="Keep WhatsApp scripts organized by shortcut and category so the team can move faster without sounding improvised."
+        eyebrow="Respostas rapidas"
+        title="Biblioteca de mensagens para o atendimento"
+        description="Organize atalhos por categoria e mantenha o time respondendo com mais velocidade e consistencia no WhatsApp."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard label="Biblioteca" value={loading ? '...' : items.length} helper="respostas ativas na base" />
         <MetricCard label="Categorias" value={loading ? '...' : categories.length} helper="clusters para o time navegar melhor" />
         <MetricCard label="Atalhos" value={loading ? '...' : items.filter((item) => item.shortcut).length} helper="comandos prontos para colar" />
-        <MetricCard label="Editor" value={editingId ? 'Edit' : 'New'} helper="com preview e feedback imediato" />
+        <MetricCard label="Edicao" value={editingId ? 'Editando' : 'Nova'} helper="resposta ativa no formulario" />
       </div>
 
       {error ? (
@@ -132,10 +132,10 @@ export default function QuickRepliesPage() {
 
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <Card variant="spotlight" className="p-6">
-          <div>
-            <p className="text-sm text-[var(--text-secondary)]">{editingId ? 'Editar resposta' : 'Nova resposta'}</p>
-            <h2 className="mt-1 text-2xl font-semibold text-white">Script composer</h2>
-          </div>
+            <div>
+              <p className="text-sm text-[var(--text-secondary)]">{editingId ? 'Editar resposta' : 'Nova resposta'}</p>
+              <h2 className="mt-1 text-2xl font-semibold text-white">Formulario da resposta</h2>
+            </div>
 
           <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
             <div className="grid gap-4 md:grid-cols-2">
@@ -195,8 +195,8 @@ export default function QuickRepliesPage() {
         <Card className="p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-sm text-[var(--text-secondary)]">Shared library</p>
-              <h2 className="text-2xl font-semibold text-white">Replies ready for the team</h2>
+              <p className="text-sm text-[var(--text-secondary)]">Biblioteca compartilhada</p>
+              <h2 className="text-2xl font-semibold text-white">Respostas prontas para o time</h2>
             </div>
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (

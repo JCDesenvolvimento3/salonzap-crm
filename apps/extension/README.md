@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# SalonZap Extension
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Chrome MV3 extension for `web.whatsapp.com` with a CRM sidebar connected to the SalonZap production API.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- injects a fixed sidebar inside WhatsApp Web
+- syncs the current chat into the CRM
+- shows the contact stage, tags, notes, and reminders
+- lets the operator move the contact in the funnel
+- applies quick replies directly into the WhatsApp composer
+- creates notes and reminders without leaving the chat
+- uses the real AI endpoints to suggest replies and analyze intent
 
-## React Compiler
+## Default production targets
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- web: `https://salonzap-crm-web.vercel.app`
+- api: `https://salonzap-crm-api.vercel.app`
 
-## Expanding the ESLint configuration
+## Local development
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev -w @salonzap/extension
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Production build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build -w @salonzap/extension
+npm run package:extension
 ```
+
+The final zip is generated at:
+
+```text
+artifacts/salonzap-extension.zip
+```
+
+## Loading in Chrome
+
+1. Open `chrome://extensions`
+2. Enable `Developer mode`
+3. Click `Load unpacked`
+4. Select `apps/extension/dist`
+5. Open `https://web.whatsapp.com`
+6. Log in to the sidebar with the same account used in the SalonZap web app
+
+## Notes
+
+- the manifest already allows `web.whatsapp.com` and the published production API
+- the sidebar defaults to the production API, but still accepts a manual API URL when needed
